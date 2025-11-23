@@ -20,6 +20,7 @@ else:
 
 folder = normalize_path(folder)
 
+# --- Validate Path ---
 if not os.path.isdir(folder):
     print(f"\n[ERROR] Invalid directory path. Calculation aborted.\nPATH: {folder}")
     exit()
