@@ -36,7 +36,7 @@ print("Scanning...\n")
 file_data = scan_files(folder)
 
 if not file_data:
-    print("Hiç dosya bulunamadı veya klasör okunamadı!")
+    print("No files were found or folders could not be read.!")
     exit()
 
 file_sizes = [f["size"] for f in file_data]
