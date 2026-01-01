@@ -3,8 +3,11 @@ from pdf_cdf import calculate_pdf, calculate_cdf
 from plotter import plot_both, plot_size_distribution_log
 from analyze import (analyze_extensions, analyze_by_extension_size,
                      calculate_statistics, find_large_files, analyze_time_distribution)
+from export_results import export_to_json, create_summary_report
 import numpy as np
 import os
+import platform
+import datetime
 
 
 # --- Helper Functions ---
@@ -16,20 +19,30 @@ def bytes_to_gb(x):
     return round(x / (1024 * 1024 * 1024), 2)
 
 
+# --- System Information ---
+print("\n" + "=" * 70)
+print("FILE SYSTEM ANALYZER - CS350 PROJECT")
+print("=" * 70)
+print(f"\nSystem: {platform.system()} ({platform.platform()})")
+print(f"Architecture: {platform.machine()}")
+print(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+print("=" * 70)
+
 # --- Input Mode ---
 use_test_folder = False  # True → test folder, False → manual input
 
 if use_test_folder:
     folder = r"C:\Users\kaang\Documents"
 else:
-    folder = input("Enter folder path to scan: ").strip()
+    folder = input("\nEnter folder path to scan (e.g., C:\\ or /Users): ").strip()
 
 # --- Path Validation ---
 if not os.path.isdir(folder):
     print("\n[ERROR] Invalid directory path. Calculation aborted.\n")
     exit()
 
-print(f"\n[INFO] Scanning directory: {folder}\n")
+print(f"\n[INFO] Scanning directory: {folder}")
+print("[WARNING] Full disk scan may take 10-30 minutes...\n")
 
 # --- Scan ---
 print("Scanning...\n")
@@ -80,8 +93,8 @@ print("DETAYLI ANALİZLER")
 print("=" * 60)
 
 calculate_statistics(file_sizes)
-analyze_extensions(file_data)
-analyze_by_extension_size(file_data)
+analyze_extensions(file_data, top_n=20)  # TOP-20 by count
+analyze_by_extension_size(file_data, top_n=20)  # TOP-20 by size
 find_large_files(file_data, threshold_mb=50)
 analyze_time_distribution(file_data)
 
@@ -102,6 +115,25 @@ except Exception as e:
     print(f"\n✗ Grafik oluşturulurken hata: {e}")
     print("Not: Matplotlib yüklü değilse 'pip install matplotlib' ile yükleyebilirsiniz.")
 
+# --- Export Results to JSON ---
+print("\n" + "=" * 60)
+print("EXPORTING RESULTS TO JSON...")
+print("=" * 60)
+
+# Generate filename based on system and timestamp
+timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+system_name = platform.system().lower()
+output_filename = f"scan_results_{system_name}_{timestamp}.json"
+
+export_data = export_to_json(file_data, output_filename)
+
+if export_data:
+    create_summary_report(export_data)
+
 print("\n" + "=" * 60)
 print("ANALİZ TAMAMLANDI!")
+print("=" * 60)
+print(f"\nResults saved to: {output_filename}")
+print("\nTo compare with another system:")
+print(f"  python compare_systems.py {output_filename} <other_result.json>")
 print("=" * 60)
