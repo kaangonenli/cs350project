@@ -82,10 +82,10 @@ print("[WARNING] Full disk scan may take 10-30 minutes...\n")
 
 # --- Scan ---
 print("Scanning...\n")
-# Limit to 500K files to prevent memory issues
-MAX_FILES = 500000
-print(f"[INFO] File limit set to {MAX_FILES:,} files to prevent memory issues")
-print("[INFO] This is still a very large and representative dataset\n")
+# No file limit - scan everything
+MAX_FILES = None
+print("[INFO] No file limit - scanning all accessible files")
+print("[INFO] This may take longer for large directories\n")
 file_data = scan_files(folder, max_files=MAX_FILES)
 
 if not file_data:
