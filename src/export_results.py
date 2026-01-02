@@ -4,24 +4,17 @@ import datetime
 from collections import Counter
 
 def export_to_json(file_data, output_file="scan_results.json"):
-    """
-    Export scan results to JSON file with system information and detailed statistics
-    """
     if not file_data:
         print("No data to export!")
         return None
 
-    # Calculate basic statistics
     file_sizes = [f["size"] for f in file_data]
     total_files = len(file_sizes)
     total_size = sum(file_sizes)
 
-    # Extension analysis
     extensions = [f["extension"] for f in file_data if f["extension"]]
     no_ext_count = sum(1 for f in file_data if not f["extension"])
     ext_counter = Counter(extensions)
-
-    # Size by extension
     ext_sizes = {}
     for f in file_data:
         ext = f["extension"] if f["extension"] else "no_ext"
@@ -30,7 +23,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
         ext_sizes[ext]["total_size"] += f["size"]
         ext_sizes[ext]["count"] += 1
 
-    # Top 20 by count
     top_20_by_count = [
         {
             "extension": ext,
@@ -40,7 +32,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
         for ext, count in ext_counter.most_common(20)
     ]
 
-    # Top 20 by size
     ext_size_list = [(ext, data["total_size"], data["count"]) for ext, data in ext_sizes.items()]
     ext_size_list.sort(key=lambda x: x[1], reverse=True)
 
@@ -56,7 +47,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
         for ext, size, count in ext_size_list[:20]
     ]
 
-    # System information
     system_info = {
         "os": platform.system(),
         "os_version": platform.version(),
@@ -67,7 +57,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
         "scan_date": datetime.datetime.now().isoformat()
     }
 
-    # Prepare export data
     export_data = {
         "system_info": system_info,
         "summary": {
@@ -81,7 +70,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
         "top_20_extensions_by_size": top_20_by_size
     }
 
-    # Write to JSON file
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(export_data, f, indent=2, ensure_ascii=False)
 
@@ -90,9 +78,6 @@ def export_to_json(file_data, output_file="scan_results.json"):
 
 
 def create_summary_report(export_data):
-    """
-    Print a summary of the exported data
-    """
     print("\n" + "=" * 70)
     print("EXPORT SUMMARY")
     print("=" * 70)

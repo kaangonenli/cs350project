@@ -2,7 +2,6 @@ import json
 import sys
 
 def load_json_result(filepath):
-    """Load a JSON result file"""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -15,9 +14,6 @@ def load_json_result(filepath):
 
 
 def compare_two_systems(file1, file2):
-    """
-    Compare two system scan results and generate comparison report
-    """
     data1 = load_json_result(file1)
     data2 = load_json_result(file2)
 
@@ -25,16 +21,14 @@ def compare_two_systems(file1, file2):
         return
 
     print("\n" + "=" * 80)
-    print("SYSTEM COMPARISON REPORT")
+    print("SYSTEM COMPARISON")
     print("=" * 80)
 
-    # System info comparison
-    print("\n### SYSTEM INFORMATION ###\n")
+    print("\n### SYSTEM INFO ###\n")
     print(f"System 1: {data1['system_info']['os']} - {data1['system_info']['platform']}")
     print(f"System 2: {data2['system_info']['os']} - {data2['system_info']['platform']}")
 
-    # Summary comparison
-    print("\n### SUMMARY COMPARISON ###\n")
+    print("\n### SUMMARY ###\n")
     s1 = data1['summary']
     s2 = data2['summary']
 
