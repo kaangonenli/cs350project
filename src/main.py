@@ -31,7 +31,7 @@ print("=" * 70)
 # --- Input Mode ---
 print("\nScan Options:")
 print("  1. Quick scan - Enter a specific folder path")
-print("  2. Full disk scan - Scan entire system (recommended for project)")
+print("  2. Scan current user folder (recommended for project)")
 print("  3. Exit")
 
 choice = input("\nSelect option (1/2/3): ").strip()
@@ -39,26 +39,26 @@ choice = input("\nSelect option (1/2/3): ").strip()
 if choice == "1":
     folder = input("\nEnter folder path to scan: ").strip()
 elif choice == "2":
-    # Detect OS and set full disk path
+    # Detect OS and set current user's home folder
     current_os = platform.system()
     if current_os == "Windows":
-        folder = "C:\\"
-        print(f"\n[INFO] Full disk scan selected: {folder}")
-        confirm = input("This will scan entire C:\\ drive. Continue? (y/n): ").strip().lower()
+        folder = os.path.expanduser("~")  # C:\Users\YourName
+        print(f"\n[INFO] User folder scan selected: {folder}")
+        confirm = input(f"This will scan your user folder. Continue? (y/n): ").strip().lower()
         if confirm != 'y':
             print("Scan cancelled.")
             exit()
     elif current_os == "Darwin":  # macOS
-        folder = "/Users"
-        print(f"\n[INFO] Full disk scan selected: {folder}")
-        confirm = input("This will scan entire /Users directory. Continue? (y/n): ").strip().lower()
+        folder = os.path.expanduser("~")  # /Users/YourName
+        print(f"\n[INFO] User folder scan selected: {folder}")
+        confirm = input(f"This will scan your user folder. Continue? (y/n): ").strip().lower()
         if confirm != 'y':
             print("Scan cancelled.")
             exit()
     elif current_os == "Linux":
-        folder = "/home"
-        print(f"\n[INFO] Full disk scan selected: {folder}")
-        confirm = input("This will scan entire /home directory. Continue? (y/n): ").strip().lower()
+        folder = os.path.expanduser("~")  # /home/username
+        print(f"\n[INFO] User folder scan selected: {folder}")
+        confirm = input(f"This will scan your user folder. Continue? (y/n): ").strip().lower()
         if confirm != 'y':
             print("Scan cancelled.")
             exit()
@@ -82,7 +82,11 @@ print("[WARNING] Full disk scan may take 10-30 minutes...\n")
 
 # --- Scan ---
 print("Scanning...\n")
-file_data = scan_files(folder)
+# Limit to 500K files to prevent memory issues
+MAX_FILES = 500000
+print(f"[INFO] File limit set to {MAX_FILES:,} files to prevent memory issues")
+print("[INFO] This is still a very large and representative dataset\n")
+file_data = scan_files(folder, max_files=MAX_FILES)
 
 if not file_data:
     print("No files were found or folders could not be read.!")

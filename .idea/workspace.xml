@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="3bd52814-ebba-402c-8629-1f87aa92eec4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QUICK_START.md" beforeDir="false" afterPath="$PROJECT_DIR$/QUICK_START.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QUICK_START.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/USAGE_GUIDE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MENU_GUIDE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PROJECT_SUMMARY.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scan_results_darwin_20260102_115822.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/scanner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
