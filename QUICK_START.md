@@ -11,13 +11,34 @@
 
 ```bash
 cd src
-python main.py
+python3 main.py
 ```
 
-### Giriş Örnekleri:
-- **Windows**: `C:\` veya `C:\Users\YourName`
-- **macOS**: `/Users` veya `/Users/YourName`
-- **Linux**: `/home` veya `/home/username`
+### Menü Seçenekleri:
+
+Program size 3 seçenek sunar:
+
+```
+Scan Options:
+  1. Quick scan - Enter a specific folder path
+  2. Full disk scan - Scan entire system (recommended for project)
+  3. Exit
+```
+
+**Proje için Seçenek 2'yi seçin!**
+
+#### Seçenek 1: Quick Scan (Test için)
+Belirli bir klasör girin:
+- **Windows**: `C:\Users\YourName\Documents`
+- **macOS**: `/Users/YourName/Documents`
+
+#### Seçenek 2: Full Disk Scan (ÖNERİLİR - Hocanın istediği)
+Program otomatik olarak tam diski tarar:
+- **Windows**: `C:\` otomatik seçilir
+- **macOS**: `/Users` otomatik seçilir
+- **Linux**: `/home` otomatik seçilir
+
+Onay ister: `Continue? (y/n)` → **y** yazın
 
 ### Çıktı:
 - Ekranda detaylı analiz

@@ -29,12 +29,48 @@ print(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 print("=" * 70)
 
 # --- Input Mode ---
-use_test_folder = False  # True → test folder, False → manual input
+print("\nScan Options:")
+print("  1. Quick scan - Enter a specific folder path")
+print("  2. Full disk scan - Scan entire system (recommended for project)")
+print("  3. Exit")
 
-if use_test_folder:
-    folder = r"C:\Users\kaang\Documents"
+choice = input("\nSelect option (1/2/3): ").strip()
+
+if choice == "1":
+    folder = input("\nEnter folder path to scan: ").strip()
+elif choice == "2":
+    # Detect OS and set full disk path
+    current_os = platform.system()
+    if current_os == "Windows":
+        folder = "C:\\"
+        print(f"\n[INFO] Full disk scan selected: {folder}")
+        confirm = input("This will scan entire C:\\ drive. Continue? (y/n): ").strip().lower()
+        if confirm != 'y':
+            print("Scan cancelled.")
+            exit()
+    elif current_os == "Darwin":  # macOS
+        folder = "/Users"
+        print(f"\n[INFO] Full disk scan selected: {folder}")
+        confirm = input("This will scan entire /Users directory. Continue? (y/n): ").strip().lower()
+        if confirm != 'y':
+            print("Scan cancelled.")
+            exit()
+    elif current_os == "Linux":
+        folder = "/home"
+        print(f"\n[INFO] Full disk scan selected: {folder}")
+        confirm = input("This will scan entire /home directory. Continue? (y/n): ").strip().lower()
+        if confirm != 'y':
+            print("Scan cancelled.")
+            exit()
+    else:
+        print(f"[ERROR] Unsupported OS: {current_os}")
+        exit()
+elif choice == "3":
+    print("Goodbye!")
+    exit()
 else:
-    folder = input("\nEnter folder path to scan (e.g., C:\\ or /Users): ").strip()
+    print("[ERROR] Invalid option.")
+    exit()
 
 # --- Path Validation ---
 if not os.path.isdir(folder):
